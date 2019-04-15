@@ -6,32 +6,24 @@
           xs12
           sm6
           md4
-          v-for="group in groups"
-          :key="group.Id"
+          v-for="(group, index) in getGroups"
+          :key="index"
         >
           <v-item-group>
             <v-container grid-list-md>
               <v-layout wrap>
-                <v-toolbar
-                  card
-                  color="blue-grey"
-                  height="42px"
-                  dark
-                >
-                  <v-toolbar-title>{{group.Caption}}</v-toolbar-title>
-                  <v-spacer></v-spacer>
-                  <v-icon
-                    dark
-                    :id="group.Id"
-                    @click="btnToggle($event)"
-                  >keyboard_arrow_down
-                    <!--{{ btnToggle ? 'keyboard_arrow_down' : 'keyboard_arrow_up' }}-->
-                  </v-icon>
-                </v-toolbar>
-                <v-flex row xs12 class="description">
-                
-                </v-flex>
+                <v-expansion-panel v-if="true">
+                  <v-expansion-panel-content>
+                    <template v-slot:header>
+                      <h2 class="group-header">{{group.Caption}}</h2>
+                    </template>
+                    <v-card>
+                      <v-card-text v-html="group.description"></v-card-text>
+                    </v-card>
+                  </v-expansion-panel-content>
+                </v-expansion-panel>
                 <v-flex
+                  v-else
                   v-for="product in products"
                   v-if="product.GroupId === group.Id"
                   :key="product.Id"
@@ -76,35 +68,40 @@
   export default {
     data() {
       return {
-        //btnToggle: {}
+        groups: {},
+        
       }
     },
     computed: {
-      groups() {
-        return this.$store.getters.groups
-      },
-      description() {
-        return this.$store.getters.description
+      getGroups() {
+        this.groups = this.$store.getters.groups
+        for (let group in this.groups) {
+          //this.groups[group].toggle = false
+        }
+        return this.groups
       },
       products() {
         return this.$store.getters.products
       },
       loading() {
         return this.$store.getters.loading
+      },
+      btnToggle() {
+
       }
     },
     methods: {
-      btnToggle(event) {
-        console.log(event.target.parentNode.parentNode.nextSibling);
-        this.$store.dispatch('fetchDescription', event.target.id)
-          .then(() => event.target.parentNode.parentNode.nextSibling.innerHTML = this.description)
-          .catch(() => {})
-        
+      toggle(event) {
+        let id = event.target.id
+        this.groups[id].toggle = !this.groups[id].toggle
+        console.log(this.groups[id].Id,' = ', this.groups[id].toggle);
       }
-  }
+    }
   }
 </script>
 
 <style scoped>
-
+.group-header {
+  color: #4c5155;
+}
 </style>

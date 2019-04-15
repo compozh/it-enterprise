@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-layout column>
+    <v-layout wrap>
       <v-flex xs12 class="text-xs-center pt-5" v-if="loading">
         <v-progress-circular
           :size="100"
@@ -14,7 +14,7 @@
         v-else-if="!loading"
         v-for="order in orders"
       >
-        <v-flex xs9 mb-3>
+        <v-flex xs12 mb-3>
           <v-card color="blue-grey lighten-4">
             <v-layout>
               <v-flex xs3>

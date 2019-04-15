@@ -5,7 +5,6 @@ import products from './products'
 import groups from './groups'
 import orders from './orders'
 import statuses from './statuses'
-import descriptions from './descriptions'
 
 Vue.use(Vuex)
 
@@ -15,8 +14,7 @@ export default new Vuex.Store({
     groups,
     products,
     orders,
-    statuses,
-    descriptions
+    statuses
   },
   state: {},
   mutations: {},

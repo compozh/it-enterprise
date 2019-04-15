@@ -2,9 +2,27 @@
   <v-app>
     <v-navigation-drawer
       app
-      temporary
+      :mini-variant.sync="mini"
+      hide-overlay
+      fixed
+      clipped
       v-model="drawer"
     >
+      <v-toolbar flat class="transparent">
+        <v-list class="pa-0">
+          <v-list-tile>
+            <v-spacer></v-spacer>
+            <v-list-tile-action>
+              <v-btn
+                icon
+                @click.stop="mini = !mini"
+              >
+                <v-icon>{{ mini ? 'chevron_right' : 'chevron_left' }}</v-icon>
+              </v-btn>
+            </v-list-tile-action>
+          </v-list-tile>
+        </v-list>
+      </v-toolbar>
       <v-list>
         <v-list-tile
           v-for="link in links"
@@ -18,7 +36,6 @@
             <v-list-tile-title v-text="link.title"></v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
-
       </v-list>
     </v-navigation-drawer>
     <v-toolbar app dark color="primary">
@@ -74,7 +91,8 @@
   export default {
     data() {
       return {
-        drawer: false
+        drawer: true,
+        mini: true
       }
     },
     computed: {
