@@ -12,20 +12,19 @@
           <v-item-group>
             <v-container grid-list-md>
               <v-layout wrap>
-                <v-expansion-panel v-if="true">
+                <v-expansion-panel>
                   <v-expansion-panel-content>
                     <template v-slot:header>
                       <h2 class="group-header">{{group.Caption}}</h2>
                     </template>
                     <v-card>
-                      <v-card-text v-html="group.description"></v-card-text>
+                      <v-card-text v-html="group.description" class="grey lighten-5"></v-card-text>
                     </v-card>
                   </v-expansion-panel-content>
                 </v-expansion-panel>
                 <v-flex
-                  v-else
                   v-for="product in products"
-                  v-if="product.GroupId === group.Id"
+                  v-if="!groups[index].toggle && product.GroupId === group.Id"
                   :key="product.Id"
                   md4
                 >
@@ -69,14 +68,13 @@
     data() {
       return {
         groups: {},
-        
       }
     },
     computed: {
       getGroups() {
         this.groups = this.$store.getters.groups
         for (let group in this.groups) {
-          //this.groups[group].toggle = false
+          this.groups[group].toggle = false
         }
         return this.groups
       },
