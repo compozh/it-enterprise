@@ -6,7 +6,7 @@
           xs12
           sm6
           md4
-          v-for="(group, index) in getGroups"
+          v-for="(group, index) in groups"
           :key="index"
         >
           <v-item-group>
@@ -24,7 +24,7 @@
                 </v-expansion-panel>
                 <v-flex
                   v-for="product in products"
-                  v-if="!groups[index].toggle && product.GroupId === group.Id"
+                  v-if="product.GroupId === group.Id"
                   :key="product.Id"
                   md4
                 >
@@ -65,41 +65,22 @@
 
 <script>
   export default {
-    data() {
-      return {
-        groups: {},
-      }
-    },
     computed: {
-      getGroups() {
-        this.groups = this.$store.getters.groups
-        for (let group in this.groups) {
-          this.groups[group].toggle = false
-        }
-        return this.groups
+      groups() {
+        return this.$store.getters.groups
       },
       products() {
         return this.$store.getters.products
       },
       loading() {
         return this.$store.getters.loading
-      },
-      btnToggle() {
-
-      }
-    },
-    methods: {
-      toggle(event) {
-        let id = event.target.id
-        this.groups[id].toggle = !this.groups[id].toggle
-        console.log(this.groups[id].Id,' = ', this.groups[id].toggle);
       }
     }
   }
 </script>
 
 <style scoped>
-.group-header {
-  color: #4c5155;
-}
+  .group-header {
+    color: #4c5155;
+  }
 </style>
